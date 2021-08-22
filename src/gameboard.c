@@ -26,8 +26,8 @@ void InitGameBoard() {
 }
 
 void UpdateGameBoard() {
-    scale = (GetScreenWidth() / background.width) * 0.6;
-
+    scale = (GetScreenWidth() / (float) background.width) * 0.5;
+    
     position.x = GetScreenWidth() / 2 - (background.width * scale) / 2;
     position.y = GetScreenHeight() / 2 - (background.height * scale) / 2;
 

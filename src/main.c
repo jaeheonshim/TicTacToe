@@ -11,7 +11,7 @@ int main() {
 
     InitGameBoard();
 
-    Color backgroundColor = GetColor(0x103c52FF);
+    Color backgroundColor = WHITE;
 
     while (!WindowShouldClose())
     {
