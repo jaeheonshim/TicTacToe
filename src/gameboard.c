@@ -1,8 +1,6 @@
 #include "raylib.h"
 #include "util.h"
-
-#define X 1
-#define O -1
+#include "game.h"
 
 #define NORMAL 0
 #define TEXTURE 1
@@ -16,8 +14,6 @@ static float scale;
 static Vector2 position;
 
 static Rectangle spots[9];
-static char state[9];
-static char toPlay = X;
 
 static char cursorState = NORMAL;
 static float cursorScale = 0.20;
@@ -36,7 +32,7 @@ static void UpdateCursor() {
     Vector2 mousePosition = GetMousePosition();
     int i;
     for(i = 0; i < 9; i++) {
-        if(CheckCollisionPointRec(mousePosition, spots[i]) && state[i] == 0) {
+        if(CheckCollisionPointRec(mousePosition, spots[i]) && GameGetToken(i) == 0) {
             HideCursor();
             cursorState = TEXTURE;
             break;
@@ -50,17 +46,12 @@ static void UpdateCursor() {
     }
 }
 
-static void MakeMove(int i) {
-    state[i] = toPlay;
-    toPlay *= -1;
-}
-
 static void HandleClick() {
     Vector2 mousePosition = GetMousePosition();
 
     for(int i = 0; i < 9; i++) {
         if(CheckCollisionPointRec(mousePosition, spots[i])) {
-            MakeMove(i);
+            GamePlaceToken(i);
             break;
         }
     }
@@ -68,9 +59,9 @@ static void HandleClick() {
 
 static void DrawCursorTexture() {
     Vector2 mousePosition = GetMousePosition();
-    if(toPlay == X) {
+    if(GameToPlay() == TOKEN_X) {
         DrawTextureEx(x, Vector2(mousePosition.x - x.width * cursorScale / 2, mousePosition.y - x.height * cursorScale / 2), 0, cursorScale, WHITE);
-    } else if(toPlay == O) {
+    } else if(GameToPlay() == TOKEN_O) {
         DrawTextureEx(o, Vector2(mousePosition.x - o.width * cursorScale / 2, mousePosition.y - o.height * cursorScale / 2), 0, cursorScale, WHITE);
     }
 }
@@ -100,9 +91,9 @@ void DrawGameBoard() {
     DrawTextureEx(background, position, 0, scale, WHITE);
 
     for(int i = 0; i < 9; i++) {
-        if(state[i] == O) {
+        if(GameGetToken(i) == TOKEN_O) {
             DrawTextureEx(o, Vector2((position.x + width * (i % 3)) + (width - o.width * scale) / 2, (position.y + width * (i / 3)) + (width - o.height * scale) / 2), 0, scale, WHITE);
-        } else if(state[i] == X) {
+        } else if(GameGetToken(i) == TOKEN_X) {
             DrawTextureEx(x, Vector2((position.x + width * (i % 3)) + (width - x.width * scale) / 2, (position.y + width * (i / 3)) + (width - x.height * scale) / 2), 0, scale, WHITE);
         }
     }
