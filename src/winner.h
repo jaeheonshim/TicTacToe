@@ -1,0 +1,1 @@
+void DisplayWinner(int winner);
