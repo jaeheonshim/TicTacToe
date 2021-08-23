@@ -18,3 +18,18 @@ int GamePlaceToken(int i) {
 int GameToPlay() {
     return toPlay;
 }
+
+int GameGetWinner() {
+    for(int i = 0; i < 3; i++) {
+        if(state[(i * 3)] == state[(i * 3) + 1] && state[(i * 3) + 1] == state[(i * 3) + 2]) return state[i * 3];
+        if(state[i] == state[i + 3] && state[i + 3] == state[i + 6]) return state[i];
+    }
+
+    return 0;
+}
+
+/*
+0 1 2
+3 4 5
+6 7 8
+*/

@@ -4,3 +4,4 @@
 int GameGetToken(int i);
 int GamePlaceToken(int i);
 int GameToPlay();
+int GameGetWinner();

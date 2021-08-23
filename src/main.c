@@ -20,8 +20,12 @@ int main() {
         BeginDrawing();
 
         ClearBackground(backgroundColor);
-
-        DisplayWinner(TOKEN_O);
+        if(!GameGetWinner()) {
+            UpdateGameBoard();
+            DrawGameBoard();
+        } else {
+            DisplayWinner(GameGetWinner());
+        }
 
         EndDrawing();
     }
