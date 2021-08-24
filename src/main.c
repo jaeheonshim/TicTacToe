@@ -2,6 +2,7 @@
 #include "game.h"
 #include "gameboard.h"
 #include "winner.h"
+#include "fade.h"
 
 int main() {
     const int screenWidth = 1280;
@@ -17,14 +18,23 @@ int main() {
 
     while (!WindowShouldClose())
     {
+        float delta = GetFrameTime();
         BeginDrawing();
 
         ClearBackground(backgroundColor);
-        if(!GameGetWinner()) {
+
+        if(!FadeComplete()) {
             UpdateGameBoard();
             DrawGameBoard();
-        } else {
-            DisplayWinner(GameGetWinner());
+        }
+
+        if(GameGetWinner() != 0) {
+            FadeEffect(0.5);
+            if(FadeComplete()) {
+                DisplayWinner(GameGetWinner());
+            } else {
+                DrawFade();
+            }
         }
 
         EndDrawing();
