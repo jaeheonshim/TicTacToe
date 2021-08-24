@@ -25,6 +25,9 @@ int GameGetWinner() {
         if(state[i] == state[i + 3] && state[i + 3] == state[i + 6]) return state[i];
     }
 
+    if(state[0] == state[4] && state[4] == state[8]) return state[0];
+    if(state[2] == state[4] && state[4] == state[6]) return state[2];
+
     return 0;
 }
 
